@@ -1,0 +1,109 @@
+/**
+ * theme
+ */
+
+@use "sass:map";
+
+@import "config";
+
+
+/* --------------------------------------------------
+ * Color Setup
+ * --------------------------------------------------*/
+
+$-colors: (
+        "primary":        $primary-color,
+        "secondary":      $secondary-color,
+        "tertiary":       $tertiary-color,
+        "success":        $success-color,
+        "danger":         $danger-color,
+        "warning":        $warning-color,
+        "info":           $info-color,
+        "lightest-grey":  $lightest-grey,
+        "light-grey":     $light-grey,
+        "medium-grey":    $medium-grey,
+        "dark-grey":      $dark-grey,
+        "darkest-grey":   $darkest-grey
+);
+
+/**
+ * Define the added colors as css variables so that they can be accessed by
+ * other running css or js processes.
+ */
+
+:root {
+  @each $name, $color in $-colors {
+    --color-#{$name}: #{$color};
+  }
+}
+
+/**
+ * Create text color helpers.
+ */
+
+@each $name, $color in $-colors {
+  .text-color-#{$name} {
+    color: $color;
+  }
+}
+
+/* --------------------------------------------------
+ * Typography Setup
+ * --------------------------------------------------*/
+
+$-heading-sizes: (
+        1: $h1-size,
+        2: $h2-size,
+        3: $h3-size,
+        4: $h4-size,
+        5: $h5-size,
+        6: $h6-size,
+);
+
+/**
+ * Define base heading class.
+ */
+
+%heading {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-family: $heading-font-family;
+}
+
+@each $h, $size in $-heading-sizes {
+  h#{$h},
+  .h#{$h} {
+    @extend %heading;
+    font-size: $size !important; // might not want to do this?
+  }
+}
+
+p,
+.p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-family: $paragraph-font-family;
+  font-size: $p-size;
+}
+
+.blockquote {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: $quote-size;
+  font-family: $quote-font-family;
+
+  &-footer {
+    @extend .p;
+
+    display: inline-block;
+
+    &::before {
+      content: "\2014\00A0"; // em dash, nbsp
+    }
+  }
+}
+
+.code {
+  font-family: $code-font-family;
+  font-size: $code-size;
+}
